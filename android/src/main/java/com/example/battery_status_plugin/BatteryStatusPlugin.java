@@ -26,7 +26,7 @@ public class BatteryStatusPlugin implements FlutterPlugin, BatteryStatus.Battery
 
   @Override
   public void getBatteryStatus(@NonNull String messageFromPlugin, BatteryStatus.Result<BatteryStatus.BatteryStatusResult> result, Context context) {
-    String message = "Unknown " + messageFromPlugin;
+    String message = messageFromPlugin;
 
     int batteryLevel = getBatteryLevel(context);
     BatteryStatus.BatteryStatusResult batteryStatus;

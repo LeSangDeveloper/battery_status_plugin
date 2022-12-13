@@ -3,9 +3,12 @@
 
 package com.example.battery_status_plugin;
 
+import android.content.Context;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.BasicMessageChannel;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MessageCodec;
@@ -121,13 +124,13 @@ public class BatteryStatus {
 
   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
   public interface BatteryStatusApi {
-    void getBatteryStatus(@NonNull String messageFromPlugin, Result<BatteryStatusResult> result);
+    void getBatteryStatus(@NonNull String messageFromPlugin, Result<BatteryStatusResult> result, Context context);
 
     /** The codec used by BatteryStatusApi. */
     static MessageCodec<Object> getCodec() {
       return       BatteryStatusApiCodec.INSTANCE;    }
     /**Sets up an instance of `BatteryStatusApi` to handle messages through the `binaryMessenger`. */
-    static void setup(BinaryMessenger binaryMessenger, BatteryStatusApi api) {
+    static void setup(BinaryMessenger binaryMessenger, BatteryStatusApi api, FlutterPlugin.FlutterPluginBinding binding) {
       {
         BasicMessageChannel<Object> channel =
             new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.BatteryStatusApi.getBatteryStatus", getCodec());
@@ -152,7 +155,9 @@ public class BatteryStatus {
                 }
               };
 
-              api.getBatteryStatus(messageFromPluginArg, resultCallback);
+              Context context = binding.getApplicationContext().getApplicationContext();
+
+              api.getBatteryStatus(messageFromPluginArg, resultCallback, context);
             }
             catch (Error | RuntimeException exception) {
               wrapped.put("error", wrapError(exception));
